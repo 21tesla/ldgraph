@@ -4,12 +4,12 @@ from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
 from PyQt6.QtGui import QDoubleValidator
 from PyQt6.QtCore import Qt
 import numpy as np
-from ui.plot_widget import PlotWidget
-from ui.io_controller import IOController
-from core.binding_model import AVAILABLE_MODELS, generic_fit
-from core.config import get_model_params, save_model_params
-from ui.menu_builder import MenuBuilder
-from core.updater import Updater
+from ldgraph.ui.plot_widget import PlotWidget
+from ldgraph.ui.io_controller import IOController
+from ldgraph.core.binding_model import AVAILABLE_MODELS, generic_fit
+from ldgraph.core.config import get_model_params, save_model_params
+from ldgraph.ui.menu_builder import MenuBuilder
+from ldgraph.core.updater import Updater
 
 class MainWindow(QMainWindow):
     def __init__(self):
