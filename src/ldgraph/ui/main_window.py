@@ -12,7 +12,7 @@ from ldgraph.ui.menu_builder import MenuBuilder
 from ldgraph.core.updater import Updater
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, file_path=None):
         super().__init__()
         self.setWindowTitle("ldgraph - Ligand Binding Titration")
         self.resize(800, 700)
@@ -27,6 +27,9 @@ class MainWindow(QMainWindow):
         self.init_ui()
         # Initialize parameters for the default selected model
         self.on_model_changed()
+        
+        if file_path:
+            self.load_file_directly(file_path)
 
     def init_ui(self):
         central_widget = QWidget()
@@ -145,6 +148,17 @@ class MainWindow(QMainWindow):
 
     def on_load(self):
         x, y, x_label, y_label, error = self.io_controller.load_data()
+        self._handle_loaded_data(x, y, x_label, y_label, error)
+
+    def load_file_directly(self, file_path):
+        import os
+        if not os.path.exists(file_path):
+            QMessageBox.critical(self, "Error", f"File not found: {file_path}")
+            return
+        x, y, x_label, y_label, error = self.io_controller.load_data_from_file(file_path)
+        self._handle_loaded_data(x, y, x_label, y_label, error)
+
+    def _handle_loaded_data(self, x, y, x_label, y_label, error):
         if error:
             QMessageBox.critical(self, "Error", f"Failed to load data: {error}")
             return

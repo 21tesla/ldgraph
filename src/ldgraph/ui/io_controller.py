@@ -13,6 +13,9 @@ class IOController:
         if not file_path:
             return None, None, None, None, None
 
+        return self.load_data_from_file(file_path)
+        
+    def load_data_from_file(self, file_path):
         x_label = None
         y_label = None
 
