@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ldgraph"
-version = "0.3.0"
+dynamic = ["version"]
 description = "A simple curve fitting tool"
 readme = "README.md"
 authors = [
   { name = "Logan Donaldson" }
 ]
-license = { text = "MIT" }
+license = "MIT"
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -29,6 +29,13 @@ dependencies = [
     "pyqtgraph",
     "scipy"
 ]
+
+[tool.setuptools.dynamic]
+version = {attr = "ldgraph.core.updater.VERSION"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ldgraph*"]
 
 [project.optional-dependencies]
 dev = [
