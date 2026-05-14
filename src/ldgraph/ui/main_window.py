@@ -225,8 +225,12 @@ class MainWindow(QMainWindow):
                     widgets["err"].setText("± 0 (fixed)")
             
             # Generate fit curve
-            x_min = max(self.x_data[self.x_data > 0].min(), 1e-3) if len(self.x_data[self.x_data > 0]) > 0 else 1e-3
-            x_fit = np.logspace(np.log10(x_min), np.log10(self.x_data.max()), 500)
+            if model_config.get("is_kinetic"):
+                x_fit = np.linspace(0, self.x_data.max(), 500)
+            else:
+                x_min = max(self.x_data[self.x_data > 0].min(), 1e-3) if len(self.x_data[self.x_data > 0]) > 0 else 1e-3
+                x_fit = np.logspace(np.log10(x_min), np.log10(self.x_data.max()), 500)
+            
             y_fit = model_config["model_func"](x_fit, *popt)
             self.plot_widget.set_fit(x_fit, y_fit)
         else:

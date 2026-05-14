@@ -21,6 +21,21 @@ def cooperative_binding(x, K1, K2, max_signal, min_signal):
     return min_signal + max_signal * (num / den)
 
 
+def mono_association(x, k, span, y0):
+    k_s = np.abs(k) + 1e-15
+    return y0 + span * (1 - np.exp(-k_s * x))
+
+
+def mono_decay(x, k, span, plateau):
+    k_s = np.abs(k) + 1e-15
+    return plateau + span * np.exp(-k_s * x)
+
+
+def general_monoexponential(x, a, b, c):
+    # Pure mathematical form: y = a * e^(b * x) + c
+    return a * np.exp(b * x) + c
+
+
 # Generic Fitting
 
 def generic_fit(model_func, x, y, p0, free_mask, bounds=None):
@@ -94,5 +109,23 @@ AVAILABLE_MODELS = {
         "model_func": cooperative_binding,
         "default_params": {"K1": 1.0, "K2": 1.0, "Max Signal": 100.0, "Min Signal": 0.0},
         "bounds": ([0, 0, -np.inf, -np.inf], [np.inf, np.inf, np.inf, np.inf])
+    },
+    "One-phase Association": {
+        "model_func": mono_association,
+        "default_params": {"k (rate)": 0.1, "Span": 100.0, "Y0": 0.0},
+        "bounds": ([0, -np.inf, -np.inf], [np.inf, np.inf, np.inf]),
+        "is_kinetic": True
+    },
+    "One-phase Decay": {
+        "model_func": mono_decay,
+        "default_params": {"k (rate)": 0.1, "Span": 100.0, "Plateau": 0.0},
+        "bounds": ([0, -np.inf, -np.inf], [np.inf, np.inf, np.inf]),
+        "is_kinetic": True
+    },
+    "General Monoexponential": {
+        "model_func": general_monoexponential,
+        "default_params": {"a (amplitude)": 1.0, "b (rate)": 0.01, "c (offset)": 0.0},
+        "bounds": ([-np.inf, -np.inf, -np.inf], [np.inf, np.inf, np.inf]),
+        "is_kinetic": True
     }
 }
