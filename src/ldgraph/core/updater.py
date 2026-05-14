@@ -4,7 +4,7 @@ import urllib.error
 import webbrowser
 from PyQt6.QtWidgets import QMessageBox
 
-VERSION = "0.1.1"
+VERSION = "0.4.1"
 
 class Updater:
     def __init__(self, parent=None):
