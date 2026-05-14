@@ -302,3 +302,14 @@ class MainWindow(QMainWindow):
         save_model_params(model_name, param_names, p0, fixed_flags)
         
         self.status_label.setText(f"Parameters reset to defaults for {model_name}.")
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [u.toLocalFile() for u in event.mimeData().urls()]
+        if files:
+            self.load_file_directly(files[0])
