@@ -29,3 +29,4 @@ venv.bak/
 test_*.py
 py2app/
 ldgraph_arm64.dmg
+ldgraph_intel.dmg
